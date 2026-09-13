@@ -92,7 +92,7 @@ def main():
                 shade = "" if v["title"] in ("Default Title", None) else f" – {v['title']}"
                 if ar_title:
                     ar_rows.append({
-                        "id": vid, "override": "ar_XX",
+                        "id": vid, "override": "ar_AR",
                         "title": (ar_title.strip() + shade)[:150],
                         "description": ar_desc,
                         "link": f"{DOMAIN}{AR_LINK_PREFIX}/products/{p['handle']}?variant={vid}",
