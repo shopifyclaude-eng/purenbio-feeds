@@ -12,10 +12,25 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
+      - name: Get Shopify access token   # Dev Dashboard app: client credentials grant, token valid 24 h
+        id: token
+        env:
+          SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
+          SHOPIFY_CLIENT_ID: ${{ secrets.SHOPIFY_CLIENT_ID }}
+          SHOPIFY_CLIENT_SECRET: ${{ secrets.SHOPIFY_CLIENT_SECRET }}
+        run: |
+          RESP=$(curl -sS -X POST "https://$SHOPIFY_STORE/admin/oauth/access_token" \
+            -d grant_type=client_credentials \
+            -d "client_id=$SHOPIFY_CLIENT_ID" \
+            -d "client_secret=$SHOPIFY_CLIENT_SECRET")
+          TOKEN=$(printf '%s' "$RESP" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("access_token",""))' 2>/dev/null || true)
+          if [ -z "$TOKEN" ]; then echo "Token request failed: $RESP"; exit 1; fi
+          echo "::add-mask::$TOKEN"
+          echo "token=$TOKEN" >> "$GITHUB_OUTPUT"
       - name: Generate feeds
         env:
           SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
-          SHOPIFY_TOKEN: ${{ secrets.SHOPIFY_TOKEN }}
+          SHOPIFY_TOKEN: ${{ steps.token.outputs.token }}
           ENABLE_SA: ${{ vars.ENABLE_SA }}       # set repo variable ENABLE_SA=1 when KSA warehouse is live
         run: python feed.py
       - name: Commit feeds

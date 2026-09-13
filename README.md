@@ -3,10 +3,12 @@
 Hourly: Shopify → `docs/ar.csv` (Arabic), `docs/ae.csv` (UAE / AED), `docs/sa.csv` (Saudi, when enabled) → GitHub Pages → Meta fetches.
 
 ## One-time setup
-1. Shopify custom app — Shopify admin → Settings → Apps and sales channels → Develop apps → Create app → Admin API scopes:
-   read_products, read_inventory, read_locations, read_translations, read_markets, read_locales → Install → copy the Admin API access token.
+1. Shopify app — Shopify admin → Settings → Apps and sales channels → Develop apps (opens the Dev Dashboard) → Create app → Start from Dev Dashboard →
+   Create version: scopes read_products, read_inventory, read_locations, read_translations, read_markets, read_locales, "Embed app in Shopify admin" unticked → Release →
+   Home → Install app on the store. Then Settings → Credentials: copy the Client ID and the Client secret.
+   (Shopify no longer issues a permanent Admin API token; the workflow exchanges these credentials for a 24 h token on every run.)
 2. GitHub — Settings → Secrets and variables → Actions:
-   Secret SHOPIFY_STORE = lily-n-coco.myshopify.com · Secret SHOPIFY_TOKEN = token from step 1 · Variable ENABLE_SA = 0
+   Secret SHOPIFY_STORE = lily-n-coco.myshopify.com · Secret SHOPIFY_CLIENT_ID · Secret SHOPIFY_CLIENT_SECRET (both from step 1) · Variable ENABLE_SA = 0
    (set ENABLE_SA=1 the day the Riyadh warehouse fulfils online orders)
 3. GitHub Pages — Settings → Pages → Deploy from a branch → main / /docs.
    Feed URLs: https://<owner>.github.io/purenbio-feeds/ar.csv and .../ae.csv
