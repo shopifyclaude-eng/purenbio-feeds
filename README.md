@@ -1,5 +1,11 @@
 # purenbio-feeds — Meta supplemental feeds (auto)
 
+> **DECOMMISSIONED 2026-09-14.** The Shopify "Facebook & Instagram" channel already syncs Shopify Markets prices and
+> Arabic text into the Meta catalog, and Meta refuses price/availability overrides from any other source on a
+> Shopify-managed catalog. The Arabic language feed and the UAE country feed were removed from Meta, the workflow is
+> disabled, the GitHub secrets are deleted and this repo is archived. Kept for reference only; see step 5 below for the
+> findings. Possible future use: a Meta *Supplementary* feed to fill optional attributes (gender, age group, custom labels).
+
 Hourly: Shopify → `docs/ar.csv` (Arabic), `docs/ae.csv` (UAE / AED), `docs/sa.csv` (Saudi, when enabled) → GitHub Pages → Meta fetches.
 
 ## One-time setup
