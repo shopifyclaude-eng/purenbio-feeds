@@ -28,7 +28,10 @@ Hourly: Shopify → `docs/ar.csv` (Arabic), `docs/ae.csv` (UAE / AED), `docs/sa.
      Per-warehouse availability cannot be pushed to Meta on this catalog; Meta mirrors whatever Shopify's storefront shows,
      so solve it in Shopify (market/fulfillment settings). ae.csv is still generated hourly but nothing consumes it.
      (API method kept for reference: POST /v23.0/{catalog}/product_feeds with override_type=COUNTRY and a schedule JSON,
-     using a system-user token from Business Settings → System users → hanadi → app purenbio-feeds.)
+     using a system-user token from Business Settings → System users → hanadi. The Meta app used for that token,
+     "purenbio-feeds", was deleted on 2026-09-14; create a new app if the API is ever needed again.)
+   - To force Shopify to re-send all products to Meta: add a temporary tag to every active product and remove it again
+     (each save triggers the channel). Done via the Admin API tagsAdd/tagsRemove on 2026-09-14.
 
 ## Do NOT
 - Turn off the Shopify "Facebook & Instagram" channel — it is the primary feed these files sit on top of.
